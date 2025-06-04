@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using DeviceManagementApi.Models;
 using DeviceManagmentApi.DAL;
+using DeviceManagmentApi.DTOs;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace DeviceManagmentApi
 {
@@ -87,6 +89,27 @@ namespace DeviceManagmentApi
             return NoContent();
         }
 
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequestDto loginDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var account = await _context.Accounts
+                .SingleOrDefaultAsync(a => a.Username == loginDto.Username);
+
+            if (account == null)
+                return Unauthorized("Invalid username or password.");
+
+            var verificationResult = _passwordHasher.VerifyHashedPassword(account, account.PasswordHash, loginDto.Password);
+
+            if (verificationResult == PasswordVerificationResult.Failed)
+                return Unauthorized("Invalid username or password.");
+            
+
+            return Ok("Login successful.");
+        }
         // POST: api/Account
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
