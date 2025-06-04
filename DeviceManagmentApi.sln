@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagmentApi", "DeviceManagmentApi\DeviceManagmentApi.csproj", "{910DD234-32D1-473A-8C15-56BE828FE6FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagmentApi", "src\DeviceManagmentApi\DeviceManagmentApi.csproj", "{910DD234-32D1-473A-8C15-56BE828FE6FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
