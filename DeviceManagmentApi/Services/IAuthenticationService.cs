@@ -1,6 +1,8 @@
+using DeviceManagmentApi.DTOs;
+
 namespace DeviceManagmentApi.Services;
 
-public class IAuthenticationService
+public interface IAuthenticationService
 {
-    
+    Task<AccountReadDto?> Authenticate(string login, string password);
 }
