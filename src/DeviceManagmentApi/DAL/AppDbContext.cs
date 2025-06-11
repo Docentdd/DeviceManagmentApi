@@ -11,31 +11,31 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<Role> Roles { get; set; }
-    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Account> Account { get; set; }
+    public DbSet<Role> Role { get; set; }
+    public DbSet<Employee> Employee { get; set; }
     public DbSet<Person> Persons { get; set; }
-    public DbSet<Position> Positions { get; set; }
-    public DbSet<DeviceType> DeviceTypes { get; set; } = null!;
-    public DbSet<Device> Devices { get; set; } = null!;
-    public DbSet<DeviceEmployee> DeviceEmployees { get; set; } = null!;
+    public DbSet<Position> Position { get; set; }
+    public DbSet<DeviceType> DeviceType { get; set; } = null!;
+    public DbSet<Device> Device { get; set; } = null!;
+    public DbSet<DeviceEmployee> DeviceEmployee { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // Composite key for DeviceEmployee
+        
         modelBuilder.Entity<DeviceEmployee>()
             .HasKey(de => new { de.DeviceId, de.EmployeeId });
 
-        // Role seeding
+      
         modelBuilder.Entity<Role>().HasData(
             new Role { Id = 1, Name = "Admin" },
             new Role { Id = 2, Name = "User" }
         );
 
-        // Optional: Cascade behavior or required relationships
+   
         modelBuilder.Entity<Employee>()
             .HasOne(e => e.Person)
             .WithMany()

@@ -1,6 +1,7 @@
 using System.Text;
 using DeviceManagementApi.Models;
 using DeviceManagmentApi.DAL;
+using DeviceManagmentApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<AdditionalPropertiesValidationMiddleware>();
 
 app.UseHttpsRedirection();
 

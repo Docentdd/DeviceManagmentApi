@@ -18,11 +18,11 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<AccountReadDto?> Authenticate(string login, string password)
     {
-        var account = await _context.Accounts
+        var account = await _context.Account
             .Include(a => a.Role)
             .FirstOrDefaultAsync(a => a.Login == login);
 
-        if (account == null || !VerifyPassword(password, account.PasswordHash, account.PasswordSalt))
+        if (account == null || !VerifyPassword(password, account.Password, account.PasswordSalt))
             return null;
 
         return new AccountReadDto

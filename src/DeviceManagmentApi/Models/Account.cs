@@ -15,7 +15,7 @@ namespace DeviceManagementApi.Models
         [Required]
         [MinLength(12, ErrorMessage = "Password must be at least 12 characters")]
         // We'll validate password complexity in code or using a custom validator
-        public string PasswordHash { get; set; } = null!;
+        public string Password { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
 
         // Foreign key to Role

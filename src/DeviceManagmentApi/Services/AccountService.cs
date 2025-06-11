@@ -18,7 +18,7 @@ public class AccountService : IAccountService
 
     public async Task<IEnumerable<AccountReadDto>> GetAll()
     {
-        var accounts = await _context.Accounts.Include(a => a.Role).ToListAsync();
+        var accounts = await _context.Account.Include(a => a.Role).ToListAsync();
 
         return accounts.Select(a => new AccountReadDto
         {
@@ -30,7 +30,7 @@ public class AccountService : IAccountService
 
     public async Task<AccountReadDto?> GetById(int id)
     {
-        var account = await _context.Accounts.Include(a => a.Role)
+        var account = await _context.Account.Include(a => a.Role)
             .FirstOrDefaultAsync(a => a.Id == id);
 
         if (account == null) return null;
@@ -49,14 +49,14 @@ public class AccountService : IAccountService
         var account = new Account
         {
             Login = dto.Login,
-            PasswordHash = passwordHasher.HashPassword(null, dto.Password),
+            Password = passwordHasher.HashPassword(null, dto.Password),
             RoleId = dto.RoleId,
         };
 
-        _context.Accounts.Add(account);
+        _context.Account.Add(account);
         await _context.SaveChangesAsync();
 
-        var role = await _context.Roles.FindAsync(account.RoleId);
+        var role = await _context.Role.FindAsync(account.RoleId);
 
         return new AccountReadDto
         {
@@ -68,7 +68,7 @@ public class AccountService : IAccountService
 
     public async Task<bool> Update(int id, AccountUpdateDto dto)
     {
-        var account = await _context.Accounts.FindAsync(id);
+        var account = await _context.Account.FindAsync(id);
         if (account == null) return false;
 
         account.Login = dto.Login;
@@ -81,17 +81,17 @@ public class AccountService : IAccountService
 
     public async Task<bool> Delete(int id)
     {
-        var account = await _context.Accounts.FindAsync(id);
+        var account = await _context.Account.FindAsync(id);
         if (account == null) return false;
 
-        _context.Accounts.Remove(account);
+        _context.Account.Remove(account);
         await _context.SaveChangesAsync();
         return true;
     }
 
     public async Task<AccountReadDto?> Authenticate(string login, string password)
     {
-        var account = await _context.Accounts.Include(a => a.Role)
+        var account = await _context.Account.Include(a => a.Role)
             .FirstOrDefaultAsync(a => a.Login == login);
 
         return new AccountReadDto
